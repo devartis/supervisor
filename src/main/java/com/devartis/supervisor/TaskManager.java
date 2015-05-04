@@ -58,7 +58,7 @@ public class TaskManager {
     }
 
     public synchronized UUID add(String name, Runnable task, boolean keepAlive) {
-        if (getUUID(name) != null) {
+        if (config.isValidateNameUniqueness() && getUUID(name) != null) {
             throw new IllegalArgumentException("Task with name '" + name + "' already exists");
         }
 

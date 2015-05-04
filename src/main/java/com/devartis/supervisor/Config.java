@@ -5,10 +5,13 @@ package com.devartis.supervisor;
  */
 public class Config {
 
-    private int maxThreads = 64;
+    private boolean validateNameUniqueness = true;
 
-    public int getMaxThreads() {
-        return maxThreads;
+    public boolean isValidateNameUniqueness() {
+        return validateNameUniqueness;
     }
 
+    public void setValidateNameUniqueness(boolean validateNameUniqueness) {
+        this.validateNameUniqueness = validateNameUniqueness;
+    }
 }
