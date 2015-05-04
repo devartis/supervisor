@@ -1,4 +1,4 @@
-package com.devartis.threads;
+package com.devartis.supervisor;
 
 /**
  * Created by german on 4/30/15.

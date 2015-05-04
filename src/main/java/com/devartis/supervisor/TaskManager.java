@@ -1,8 +1,8 @@
-package com.devartis.threads;
+package com.devartis.supervisor;
 
 import java.util.*;
 
-public class ThreadsManager {
+public class TaskManager {
 
     private final Config config;
 
@@ -11,13 +11,13 @@ public class ThreadsManager {
     private Map<UUID, TaskContext> threads = new HashMap<UUID, TaskContext>();
     private Thread mainThread;
 
-    public ThreadsManager(Config config) {
+    public TaskManager(Config config) {
         this.config = config;
 
         this.mainThread = new Thread() {
             public void run() {
                 while (true) {
-                    for (TaskContext thread : ThreadsManager.this.threads.values()) {
+                    for (TaskContext thread : TaskManager.this.threads.values()) {
                         thread.start();
                     }
                     try {

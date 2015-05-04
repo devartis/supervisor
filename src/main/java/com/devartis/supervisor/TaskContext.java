@@ -1,4 +1,4 @@
-package com.devartis.threads;
+package com.devartis.supervisor;
 
 import java.util.UUID;
 

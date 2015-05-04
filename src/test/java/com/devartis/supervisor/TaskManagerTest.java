@@ -1,4 +1,4 @@
-package com.devartis.threads;
+package com.devartis.supervisor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-public class ThreadsManagerTest {
+public class TaskManagerTest {
 
-    private ThreadsManager manager;
+    private TaskManager manager;
 
     @Before
     public void setUp() {
-        this.manager = new ThreadsManager(new Config());
+        this.manager = new TaskManager(new Config());
     }
 
     @Test
