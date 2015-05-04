@@ -21,6 +21,9 @@ public class TaskManager {
                         thread.start();
                     }
                     try {
+                        if (Thread.currentThread().isInterrupted()) {
+                            return;
+                        }
                         sleep(100);
                     } catch (InterruptedException e) {
                         return;
@@ -33,6 +36,12 @@ public class TaskManager {
     public synchronized void start() {
         if (!mainThread.isAlive()) {
             mainThread.start();
+        }
+    }
+
+    public synchronized void stop() {
+        if (mainThread.isAlive()) {
+            mainThread.interrupt();
         }
     }
 
@@ -49,6 +58,10 @@ public class TaskManager {
     }
 
     public synchronized UUID add(String name, Runnable task, boolean keepAlive) {
+        if (getUUID(name) != null) {
+            throw new IllegalArgumentException("Task with name '" + name + "' already exists");
+        }
+
         UUID uuid = UUID.randomUUID();
         threads.put(uuid, new TaskContext(uuid, name, task, keepAlive));
         return uuid;

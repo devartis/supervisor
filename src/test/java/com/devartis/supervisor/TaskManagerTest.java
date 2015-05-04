@@ -52,6 +52,16 @@ public class TaskManagerTest {
         assertEquals(id3, manager.getUUID("Stream1-1"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddRepeatedName() {
+        Thread task1 = new Thread();
+        Thread task2 = new Thread();
+
+        manager.add("Task1", task1);
+        manager.add("Task2", task2);
+        manager.add("Task1", task1);
+    }
+
     @Test
     public void testRunThread() throws InterruptedException {
         final int[] result = {1};
@@ -163,7 +173,7 @@ public class TaskManagerTest {
         Thread.sleep(100);
         assertTrue(manager.isRunning(task2));
         manager.stop(task2);
-        Thread.sleep(100);
+        Thread.sleep(200);
         assertFalse(manager.isRunning(task2));
         assertTrue(interrupted[0]);
     }
