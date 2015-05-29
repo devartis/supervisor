@@ -1,8 +1,5 @@
 package com.devartis.supervisor;
 
-/**
- * Created by german on 4/22/15.
- */
 public class Config {
 
     private boolean validateNameUniqueness = true;

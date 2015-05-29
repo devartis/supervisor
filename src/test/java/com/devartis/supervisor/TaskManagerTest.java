@@ -121,21 +121,44 @@ public class TaskManagerTest {
             public void run() {
                 try {
                     Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) {}
             }
         });
 
         UUID task2 = manager.add(new Runnable() {
             @Override
-            public void run() {
-            }
+            public void run() {}
         });
 
         Thread.sleep(100);
 
         assertTrue(manager.isRunning(task1));
         assertFalse(manager.isRunning(task2));
+    }
+
+    @Test
+    public void testIsRunningUsingName() throws InterruptedException {
+        manager.start();
+
+        manager.add("task1", new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {}
+            }
+        });
+
+        manager.add("task2", new Runnable() {
+            @Override
+            public void run() {}
+        });
+
+        Thread.sleep(100);
+
+        assertTrue(manager.isRunning("task1"));
+        assertFalse(manager.isRunning("task2"));
+        assertFalse(manager.isRunning("NOT_EXISTING_TASK"));
     }
 
     @Test

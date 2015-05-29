@@ -87,6 +87,11 @@ public class TaskManager {
         return threads.containsKey(uuid) && threads.get(uuid).isRunning();
     }
 
+    public synchronized boolean isRunning(String name) {
+        UUID uuid = getUUID(name);
+        return uuid != null && isRunning(uuid);
+    }
+
     public synchronized UUID getUUID(String name) {
         for (TaskContext thread : this.threads.values()) {
             if (name.equals(thread.getName())) {
