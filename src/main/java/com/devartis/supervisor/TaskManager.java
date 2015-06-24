@@ -58,7 +58,7 @@ public class TaskManager {
     }
 
     public synchronized UUID add(String name, Runnable task, boolean keepAlive) {
-        if (config.isValidateNameUniqueness() && getUUID(name) != null) {
+        if (config.isValidateNameUniqueness() && getTaskContext(name) != null && getTaskContext(name).isKeepAlive()) {
             throw new IllegalArgumentException("Task with name '" + name + "' already exists");
         }
 
@@ -88,16 +88,21 @@ public class TaskManager {
     }
 
     public synchronized boolean isRunning(String name) {
-        UUID uuid = getUUID(name);
-        return uuid != null && isRunning(uuid);
+        TaskContext task = getTaskContext(name);
+        return task != null && isRunning(task.getUUID());
     }
 
-    public synchronized UUID getUUID(String name) {
-        for (TaskContext thread : this.threads.values()) {
-            if (name.equals(thread.getName())) {
-                return thread.getUUID();
+    public synchronized TaskContext getTaskContext(String name) {
+        for (TaskContext taskContext : this.threads.values()) {
+            if (name.equals(taskContext.getName())) {
+                return taskContext;
             }
         }
         return null;
+    }
+
+    public synchronized UUID getUUID(String name) {
+        TaskContext taskContext = getTaskContext(name);
+        return  taskContext != null ? taskContext.getUUID() : null;
     }
 }

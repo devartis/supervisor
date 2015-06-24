@@ -54,7 +54,7 @@ public class TaskManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddRepeatedName() {
-        addRepeatedTasks();
+        addRepeatedTasks(true);
     }
 
     @Test
@@ -63,7 +63,12 @@ public class TaskManagerTest {
         config.setValidateNameUniqueness(false);
         manager = new TaskManager(config);
 
-        addRepeatedTasks();
+        addRepeatedTasks(true);
+    }
+
+    @Test
+    public void testAddRepeatedNameWithoutKeepAlive() {
+        addRepeatedTasks(false);
     }
 
     @Test
@@ -205,12 +210,12 @@ public class TaskManagerTest {
         assertTrue(interrupted[0]);
     }
 
-    private void addRepeatedTasks() {
+    private void addRepeatedTasks(boolean keepAlive) {
         Thread task1 = new Thread();
         Thread task2 = new Thread();
 
-        manager.add("Task1", task1);
-        manager.add("Task2", task2);
-        manager.add("Task1", task1);
+        manager.add("Task1", task1, keepAlive);
+        manager.add("Task2", task2, keepAlive);
+        manager.add("Task1", task1, keepAlive);
     }
 }
